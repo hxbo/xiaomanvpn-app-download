@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/favicon.ico">
+  <!--    <link rel="stylesheet" href="/static-assets/css/styles.css">-->
+  <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta content="yes" name="apple-touch-fullscreen">
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <meta content="white" name="apple-mobile-web-app-status-bar-style">
+  <link id="J_desktopIcon" sizes="114x114" rel="apple-touch-icon-precomposed"
+    href="/static-assets/images/apple-touch-icon/144x144.png">
+  <!--适用于 Retina 屏的 iPad-->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/static-assets/images/apple-touch-icon/144x144.png" />
+  <!--适用于 Retina 屏的 iPhone-->
+  <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/static-assets/images/apple-touch-icon/120x120.png" />
+  <!--适用于非 Retina 屏的 iPad-->
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/static-assets/images/apple-touch-icon/72x72.png" />
+  <!--适用于非 Retina 屏的 iPhone-->
+  <link rel="apple-touch-icon-precomposed" href="/static-assets/images/apple-touch-icon/57x57.png" />
+  <link rel="icon" href="">
+  <title>泥浆填报系统</title>
+  <style>
+    html {
+      height: 100%;
+    }
+
+    body,
+    #app {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script type="module" src="/src/main.js"></script>
+  <script>
+    // 页面resize,触发rem变化
+    const minFz = 14; // 最小字体大小
+    const maxFz = 36; // 最大字体大小
+    const rowWords = 24; // 正常字体,一行显示的字数（一行24个字较为合适）
+    window.onresize = function () {
+      const { innerWidth } = window;
+      const fz = innerWidth / rowWords;
+      const fontsize = fz < minFz ? minFz : fz > maxFz ? maxFz : fz;
+      document.getElementsByTagName('html')[0].style.fontSize = fontsize + 'px';
+    };
+    window.dispatchEvent(new Event('resize'))
+  </script>
+</body>
+
+</html>
