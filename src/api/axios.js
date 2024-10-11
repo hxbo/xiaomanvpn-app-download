@@ -5,11 +5,7 @@ import router from '@/router'
 import _ from 'lodash'
 import { showNotify } from 'vant'
 
-// 获取环境变量
-const { VITE_DEV_USE_MOCK, VITE_PRO_USE_MOCK } = import.meta.env
-const $isMock = VITE_DEV_USE_MOCK || VITE_PRO_USE_MOCK
-// 根据环境变量设置请求默认host, 判断是否开启mock
-const host = $isMock ? '/' : window.globalConfig.apiUrl[process.env.NODE_ENV]
+const host = '/'
 
 const intercept = 1 // 是否拦截
 

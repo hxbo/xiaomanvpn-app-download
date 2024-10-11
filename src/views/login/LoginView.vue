@@ -7,10 +7,7 @@
 <template>
   <div class="login">
     <div class="title-box">
-      <div class="logo">
-        <img src="/static-assets/images/login/logo.png" alt="" />
-      </div>
-      <div class="title"></div>
+      <div class="text-xl">用户登录</div>
     </div>
 
     <div class="login-box shadow-lg">
@@ -48,7 +45,6 @@
           <img
             alt="点击刷新"
             title="点击刷新"
-            :src="captchaBase64" 
             style="
               vertical-align: middle;
               height: 30px;
@@ -57,7 +53,6 @@
               top: 0.6rem;
               cursor: pointer;
             "
-            @click="getCaptcha"
           />
         </div>
 
@@ -78,22 +73,10 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
-/**
- * 验证码部分
- * */
-let captchaBase64 = ref('')
-let publicKey = ref('')
-function getCaptcha() {
-  Auth.getCaptcha().then((res) => {
-    captchaBase64.value = res.data.captcha
-    publicKey.value = res.data.publicKey
-    loginForm.captchaFlag = res.data.captchaFlag
-    loginForm.publicKeyFlag = res.data.publicKeyFlag
-  })
+function onSubmit() {
+  console.log('onSubmit');
+  
 }
-onMounted(() => {
-  getCaptcha()
-})
 
 /**
  * 登录部分
@@ -106,41 +89,9 @@ const loginForm = reactive({
   publicKeyFlag: '',
   clientSource: 1
 })
-function getIsLogined() {
-  const token = localStorage.getItem('access_token')
-  return !!token
-}
-function onSubmit() {
-  loginAction()
-}
-async function loginAction() {
-  const form = Object.assign({}, loginForm)
-  Auth.login(form)
-    .then((res) => {
-      const { success, data } = res
-      if (success) {
-        localStorage.setItem('access_token', data.accessToken)
-        Auth.getInfo().then((res) => {
-          localStorage.setItem('user_info', JSON.stringify(res.data))
-          router.push({ name: 'welllist', params: {} })
-        })
-      }
-    })
-    .catch((errorMsg) => {
-      if (errorMsg !== '') {
-        getCaptcha()
-      }
-    })
-    .finally(() => {})
-}
+
 onMounted(() => {
-  // 判断是否登录，登录则跳转到首页
-  const isLogined = getIsLogined()
-  if (isLogined) {
-    router.push({ name: 'welllist' })
-  } else {
-    getCaptcha()
-  }
+  
 })
 </script>
 
@@ -169,36 +120,19 @@ onMounted(() => {
 }
 
 .login {
-  background: url('../../../public/static-assets/images/login/login-page-bg-gradient.jpg');
-  min-height: 100%;
-  display: flex;
-  flex-flow: column;
-  justify-content: flex-start;
-  align-items: center;
-  -webkit-background-size: cover;
-  background-size: cover;
+  @apply h-full flex flex-col justify-center items-center bg-cover bg-no-repeat bg-left-bottom;
+
+  background-image: url('../../../public/static-assets/images/login/login-page-bg-gradient.jpg');
 
   .el-col {
     z-index: 1;
     position: relative;
-    background-color: #fff;
+    background-color: #ffffff;
     text-align: center;
   }
 
   .login-box {
-    position: relative;
-    background: rgba(255, 255, 255, 0.2);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 94vw;
-    max-width: 480px;
-    height: auto;
-    padding: 1rem 0;
-    border-radius: 0.5rem;
-    //@include boxShadow('big');
-    //box-shadow: 3px 3px 24px rgba(56, 73, 119, 0.16);
+    @apply relative bg-white/20 flex flex-col items-center justify-center w-[92%] py-4 rounded-lg max-w-[600px] border border-slate-500/25;
 
     .field-row {
       display: flex;
