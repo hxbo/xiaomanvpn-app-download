@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-img h-full flex flex-col justify-center items-center p-4 bg-cover">
+  <div class=" h-full flex flex-col justify-center items-center p-4 ">
     <div class="logo">
-        <img src="/static-assets/images/login/logo.png" alt="" class="w-[5rem]" />
+        <img src="/static-assets/images/base/logo.png" alt="" class="w-[5rem]" />
     </div>
     <div class=" min-w-80 w-1/2">
       <div class="flex gap-6 mt-6">
@@ -12,9 +12,9 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem beatae commodi veritatis minus? Dolor harum sapiente aspernatur mollitia quibusdam labore!</p>
       </div>
     </div>
-    
+
   </div>
-  
+
 </template>
 
 <script setup>
@@ -26,8 +26,5 @@ const router = useRouter()
 </script>
 
 <style lang="scss" scoped>
-.bg-img {
-  background-image: url('../../../public/static-assets/images/login/login-page-bg-gradient.jpg');
-  background-repeat: no-repeat;
-}
+
 </style>

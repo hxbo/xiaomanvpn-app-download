@@ -1,5 +1,5 @@
 <template>
-  <router-view v-slot="{ Component, route }">
+  <router-view v-slot="{ Component, route }" class="bg-cover bg-no-repeat bg-right-bottom bg-[url('/static-assets/images/base/background-mobile.jpg')]  lg:bg-[url('/static-assets/images/base/background-desktop.jpg')] ">
     <!-- 使用任何自定义过渡和回退到 `fade` -->
     <transition :name="transitionName">
       <component :is="Component" :key="route.path" />
