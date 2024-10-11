@@ -1,7 +1,7 @@
 <template>
   <div class=" h-full flex flex-col justify-center items-center p-4 ">
     <div class="logo">
-        <img src="/static-assets/images/base/logo.png" alt="" class="w-[5rem]" />
+        <img src="/static-assets/images/base/logo.png" alt="" class="w-[8rem]" />
     </div>
     <div class=" min-w-80 w-1/2">
       <div class="flex gap-6 mt-6">
