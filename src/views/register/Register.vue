@@ -1,23 +1,23 @@
 <!--
- 系统总登录页
+ 注册
  @type：page
  @依赖：
- @Arthur：何晓波
+ @Arthur：
 -->
 <template>
   <div class="login">
-    <div class="min-h-screen flex items-center justify-center">
-      <div class="text-gray-500 rounded-3xl md:shadow-xl w-full ">
+    <div class="min-h-screen flex items-center justify-center w-full">
+      <div class="text-gray-500 rounded-3xl md:shadow-xl md:w-[760px] w-full md:bg-white/40">
         <div class="md:flex w-full">
-          <div class="hidden md:flex w-1/2 bg-indigo-500 py-10 px-10 text-white flex-col justify-center items-center ">
+          <div class="hidden md:flex md:w-2/5 bg-indigo-500 py-10 px-10 text-white flex-col justify-center items-center ">
             <div class="h-32 w-32 rounded-lg p-2 bg-white mb-4 flex items-center">
               <img src="/static-assets/images/base/logo.png" height="237"  width="288"/>
             </div>
             <strong class="text-2xl">小满vpn加速器</strong>
             <strong class="text-2xl">新用户免费</strong>
           </div>
-          <div class="w-full md:w-1/2">
-            <div class="box w-full py-1 px-5 md:px-10 md:py-10">
+          <div class="w-full md:w-3/5">
+            <div class=" w-full py-1 px-5 md:px-10 md:py-10 ">
               <div class="hidden md:block text-center mb-10">
                 <h1 class="font-bold text-3xl text-gray-900">用户注册</h1>
               </div>
@@ -40,6 +40,7 @@
                       </div>
                       <input type="email"
                              id="email"
+                             @keyup='inputValidate'
                              v-model="form.email"
                              class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                              placeholder="请输入邮箱">
@@ -57,6 +58,7 @@
                       <input
                         id="password"
                         type="password"
+                        @keyup='inputValidate'
                         v-model="form.password"
                         class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                         placeholder="请输入密码，大于8位">
@@ -72,15 +74,16 @@
                       </div>
                       <input type="password"
                              id="password2"
+                             @keyup='inputValidate'
                              v-model="form.password2"
                              class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                              placeholder="请再次输入密码">
                     </div>
                   </div>
                 </div>
-                <div id="errBox" class="text-center -mx-3 text-red-600 text-sm hidden mb-4">
+                <div v-show='checkIsFailed' class="text-center -mx-3 text-red-600 text-sm  mb-4">
                   <i class="mdi mdi-alert-circle-outline "></i>
-                  <span id="err_tip"></span>
+                  <span id="err_tip">{{failText}}</span>
                 </div>
                 <div class="flex -mx-3">
                   <div class="w-full px-3 mb-5">
@@ -102,16 +105,17 @@
 </template>
 
 <script setup>
-import SvgComponent from '@/components/base/SvgComponent.vue'
 import { Basic } from '@/api/api.js'
 import { onMounted, ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
+import {showNotify, showToast} from 'vant'
+import axios from "axios"
 
 const router = useRouter()
 
-const api = 'https://xm337.com/api/v1/passport/auth/register'
+const api =  'https://xm337.life/api/v1/passport/auth/register'
 // 成功后的跳转地址
-const jumpAfterSuccess = 'download.html'
+const jumpAfterSuccess = 'https://xm337.life/#appdown'
 // 邀请码
 const invite_code = 'textCode'
 
@@ -122,104 +126,99 @@ const form = reactive({
 })
 
 const method = 'POST'
-const $submit = $('#submit')
-const $errBox = $('#errBox')
-const $errText = $('#err_tip')
-const $email = $('#email')
-const $password = $('#password')
-const $password2 = $('#password2')
 const emailReg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+
 function doSubmit() {
-  const email = $email.val()
-  const password = $password.val()
+  const {email, password} = form
   inputValidate({email, password, invite_code})
   doPost({email, password, invite_code})
 }
 function doPost(params) {
+  //axios 提交
+  // axios.post(api, params)
+  //   .then(response => {
+  //     const {token, is_admin, auth_data} = response.data
+  //     setTimeout(function () {
+  //       window.location.href = jumpAfterSuccess
+  //     }, 2000)
+  //   })
+  //   .catch(error => {
+  //     console.error(error);
+  //   });
+
   $.ajax({
     url: api,
     type: method,
     data: params,
     success: function (res) {
       const {token, is_admin, auth_data} = res.data
+      showNotify({
+        type: "success",
+        message:'注册成功，即将跳转到APP下载页'
+      })
+      // showToast('注册成功，即将跳转到APP下载页')
       setTimeout(function () {
         window.location.href = jumpAfterSuccess
       }, 2000)
     },
     error: function (err){
+      const {statusText,responseJSON:{message}} = err
+      if(statusText === 'error' && message) {
+        showNotify({
+          type: "danger",
+          message
+        })
+      }
     }
   })
 }
-function inputValidate() {
-  const email = $email.val()
-  const password = $password.val()
-  const password2 = $password2.val()
 
+const checkIsFailed = ref(false)
+const failText = ref("")
+
+function inputValidate() {
+  const {email, password, password2} = form
   if (email === '') {
-    $errText.text('邮箱不能为空')
-    $errBox.removeClass('hidden')
+    failText.value = '邮箱不能为空'
+    checkIsFailed.value = true
     return false
   }
   if (!emailReg.test(email)) {
-    $errText.text('邮箱格式不正确')
-    $errBox.removeClass('hidden')
+    failText.value = '邮箱格式不正确'
+    checkIsFailed.value = true
     return false
   }
   if (password === '') {
-    $errText.text('密码不能为空')
-    $errBox.removeClass('hidden')
+    failText.value = '密码不能为空'
+    checkIsFailed.value = true
     return false
   }
   if (password.length < 8) {
-    $errText.text('密码需大于8个字符')
-    $errBox.removeClass('hidden')
+    failText.value = '密码需大于8个字符'
+    checkIsFailed.value = true
     return false
   }
   if (password2 === '') {
-    $errText.text('确认密码不能为空')
-    $errBox.removeClass('hidden')
+    failText.value = '确认密码不能为空'
+    checkIsFailed.value = true
     return false
   }
   if (password !== password2) {
-    $errText.text('两次密码不一致')
-    $errBox.removeClass('hidden')
+    failText.value = '两次密码不一致'
+    checkIsFailed.value = true
     return false
   }
   else {
-    $errBox.addClass('hidden')
+    checkIsFailed.value = false
   }
 }
-const inputs = [$email, $password, $password2]
-for (const i in inputs) {
-  const item = inputs[i]
-  item.on('keyup',inputValidate)
-}
-
 </script>
 
 <style scoped lang="scss">
-
-
 .login {
-  @apply h-full flex flex-col justify-center items-center;
-
+  @apply h-full flex flex-col justify-center items-center w-full ;
   .login-box {
     @apply relative bg-white/20 flex flex-col items-center justify-center w-[92%] py-4 rounded-lg max-w-[600px] border border-slate-500/25;
   }
-
 }
-
-
-.box {
-  backdrop-filter: blur(10px);
-  background-color: rgba(255,255,255,0.4);
-  min-width: 460px;
-}
-@media (max-width: 768px) {
-  .box {
-    min-width: 360px;
-    background-color: rgba(255,255,255,0)
-  }
-}
-
 </style>

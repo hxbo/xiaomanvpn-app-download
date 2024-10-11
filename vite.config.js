@@ -42,17 +42,17 @@ export default defineConfig({
     // https: true,
     host: '0.0.0.0', //配置了0.0.0.0，静态资源服务将以localhost和本地Ip进行启动
     port: 9025,
-    open: true
-    // proxy: {
-    //   '/base-service': {
-    //     target: 'http://116.132.60.162:1002/', // 真实api地址
-    //     changeOrigin: true,
-    //     rewrite: (path) => path.replace(/^\/api/, '')
-    //   }
-    // }
+    open: true,
+    proxy: {
+      '/api': {
+        target: 'https://xm337.life/api/v1/passport/auth/register', // 真实api地址
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
   },
   build: {
-    outDir: 'dist_mud_app',
+    outDir: 'dist_xm_reg',
     // 静态资源的存放目录
     assetsDir: 'assets',
     //类型： boolean | 'terser' | 'esbuild'

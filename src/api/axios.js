@@ -5,7 +5,7 @@ import router from '@/router'
 import _ from 'lodash'
 import { showNotify } from 'vant'
 
-const host = '/'
+const host = ''
 
 const intercept = 1 // 是否拦截
 

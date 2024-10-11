@@ -26,7 +26,7 @@ const handleTouchEnd = (event) => {
   const distance = endX - startX
   // 如果滑动距离大于 100px，且是从左往右滑动，认为是返回上一页
   if (distance > 100) {
-    const isWelllist = route.path === '/welllist'
+    const isWelllist = route.path === '/'
     if (isWelllist) return
     transitionName.value = 'slide-right' // 设置切换动画为右滑
     router.back() // 返回上一页
