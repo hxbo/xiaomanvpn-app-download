@@ -7,22 +7,21 @@
       <h2 class="hidden md:block text-3xl max-w-[460px] mb-8 font-bold leading-10">访问海外网络服务，很便宜，速度很快，下载APP很方便，有事找在线客服</h2>
       <p class="my-4 text-center md:text-left">请下载对应的客户端:</p>
       <div class=" grid grid-cols-2 gap-4">
-
-        <a href="#" @click="openRandomLink()" target="_blank" class="button bg-slate-800 ">
+        <a href="https://apps.apple.com/cn/app/xiaoman-dns/id6615085523" @click="openRandomLink()" target="_blank" class="button bg-slate-800 ">
           <i class="mdi mdi-apple "></i>
-          苹果手机下载
+          苹果
         </a>
-        <a href="https://xm.dingge58.com/xm41.com.apk" target="_blank" class="button bg-green-600">
+        <a href="http://go.xm404.com/repo/xm41.com.apk" target="_blank" class="button bg-green-600">
           <i class="mdi mdi-android "></i>
-          安卓手机下载
+          安卓
         </a>
-        <a href="https://xm.dingge58.com/xm41.com.exe"  target="_blank" class="button bg-blue-500 ">
-          <i class="mdi mdi-windows "></i>
-          Windows电脑下载
+        <a href="http://go.xm404.com/repo/xiaoman-1.0.3-x64.exe"  target="_blank" class="button bg-blue-500 ">
+          <i class="mdi mdi-microsoft-windows "></i>
+          Windows
         </a>
-        <a href="https://xm.dingge58.com/xm41.com.dmg" target="_blank" class="button bg-slate-800 ">
-          <i class="mdi mdi-android "></i>
-          mac电脑下载
+        <a href="http://go.xm404.com/repo/xiaoman-1.0.3-x64.dmg" target="_blank" class="button bg-slate-800 ">
+          <i class="mdi mdi-laptop "></i>
+          Mac
         </a>
       </div>
     </div>

@@ -8,26 +8,35 @@
   <div class="login">
     <div class="min-h-screen flex items-center justify-center w-full">
       <div class="text-gray-500 rounded-3xl md:shadow-xl md:w-[760px] w-full md:bg-white/40">
-        <div class="md:flex w-full">
-          <div class="hidden md:flex md:w-2/5 bg-indigo-500 py-10 px-10 text-white flex-col justify-center items-center ">
+        <div class="md:flex w-full justify-center ">
+          <div  class="hidden md:flex md:w-2/5 bg-indigo-500 py-10 px-10 text-white flex-col justify-center items-center ">
             <div class="h-32 w-32 rounded-lg p-2 bg-white mb-4 flex items-center">
               <img src="/static-assets/images/base/logo.png" height="237"  width="288"/>
             </div>
-            <strong class="text-2xl">小满vpn加速器</strong>
-            <strong class="text-2xl">新用户免费</strong>
+            <div v-if="!isDisguise" class="text-center">
+              <strong class="text-2xl">小满vpn加速器</strong>
+              <br>
+              <strong class="text-2xl">新用户免费</strong>
+            </div>
+            
           </div>
           <div class="w-full md:w-3/5">
             <div class=" w-full py-1 px-5 md:px-10 md:py-10 ">
-              <div class="hidden md:block text-center mb-10">
-                <h1 class="font-bold text-3xl text-gray-900">用户注册</h1>
-              </div>
+              
               <div class="md:hidden text-center mb-10">
                 <div class="font-bold text-gray-900 flex flex-col justify-center items-center">
                   <div class="h-20 w-20 mb-1">
                     <img src="/static-assets/images/base/logo.png" height="237"  width="288"/>
                   </div>
-                  <strong class="text-2xl">小满vpn加速器</strong>
-                  <strong class="text-2xl">新用户免费</strong>
+                  <div class="md:block text-center mb-10" :class="isDisguise || 'hidden'">
+                    <h1 class="font-bold text-3xl text-gray-900">用户注册</h1>
+                  </div>
+                  <div  v-if="!isDisguise" >
+                    <strong class="text-2xl">小满vpn加速器</strong>
+                    <br>
+                    <strong class="text-2xl">新用户免费</strong>
+                  </div>
+                  
                 </div>
               </div>
               <div>
@@ -106,7 +115,7 @@
 
 <script setup>
 import { Basic } from '@/api/api.js'
-import { onMounted, ref, reactive } from 'vue'
+import { onMounted, ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import {showNotify, showToast} from 'vant'
 import axios from "axios"
@@ -124,7 +133,7 @@ const form = reactive({
   password: '',
   password2: ''
 })
-
+const isDisguise = computed(()=> window.globalConfig.isDisguise)
 const method = 'POST'
 const emailReg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
 
