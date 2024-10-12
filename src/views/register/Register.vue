@@ -130,8 +130,8 @@ const emailReg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
 
 function doSubmit() {
   const {email, password} = form
-  inputValidate({email, password, invite_code})
-  doPost({email, password, invite_code})
+  const isValid = inputValidate({email, password, invite_code})
+  if(isValid) doPost({email, password, invite_code})
 }
 function doPost(params) {
   //axios 提交
@@ -210,6 +210,7 @@ function inputValidate() {
   }
   else {
     checkIsFailed.value = false
+    return true
   }
 }
 </script>

@@ -6,10 +6,10 @@
     <div class=" min-w-80 w-1/2">
       <div class="flex gap-6 mt-6">
         <van-button icon="user" block size="normal" type="primary" text="免费注册" @click.native="router.push({ name: 'register'})"/>
-        <van-button icon="down" block size="normal" type="success" text="APP下载" @click.native='goAppDown'/>
+        <van-button icon="down" block size="normal" type="success" text="APP下载" @click.native="router.push({name: 'download'})"/>
       </div>
       <div class="mt-6 *:text-wrap">
-        <p>没什么介绍的，访问海外网络服务，很便宜，速度很快，下载app很方便，有事找在线客服</p>
+        <p>访问海外网络服务，很便宜，速度很快，下载app很方便，有事找在线客服</p>
       </div>
     </div>
 
