@@ -1,7 +1,7 @@
 <template>
   <div class=" h-full flex flex-col justify-center items-center p-4 md:flex-row md:items-center md:gap-10">
-    <div class="">
-      <img src="/static-assets/images/2-1-384x779.png" class="w-[220px] md:w-[280px]" />
+    <div class=" flex justify-center">
+      <img src="/static-assets/images/yangji.png" class="w-[85%] md:w-[420px]" />
     </div>
     <div class="">
       <h2 class="hidden md:block text-3xl max-w-[460px] mb-8 font-bold leading-10">访问海外网络服务，很便宜，速度很快，下载APP很方便，有事找在线客服</h2>
