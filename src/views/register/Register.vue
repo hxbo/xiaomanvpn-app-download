@@ -14,7 +14,7 @@
               <img src="/static-assets/images/base/logo.png" height="237"  width="288"/>
             </div>
 
-            <div v-if="!isDisguise" class="text-center">
+            <div v-if="!globalConfig.isDisguise" class="text-center">
               <strong class="text-2xl">小满vpn加速器</strong>
               <br>
               <strong class="text-2xl">新用户免费</strong>
@@ -29,10 +29,10 @@
                   <div class="h-20 w-20 mb-1">
                     <img src="/static-assets/images/base/logo.png" height="237"  width="288"/>
                   </div>
-                  <div class="md:block text-center mb-10" :class="isDisguise || 'hidden'">
+                  <div class="md:block text-center mb-10" :class="globalConfig.isDisguise || 'hidden'">
                     <h1 class="font-bold text-3xl text-gray-900">用户注册</h1>
                   </div>
-                  <div  v-if="!isDisguise" >
+                  <div  v-if="!globalConfig.isDisguise" >
                     <strong class="text-2xl">小满vpn加速器</strong>
                     <br>
                     <strong class="text-2xl">新用户免费</strong>
@@ -122,10 +122,11 @@ import {showNotify, showToast} from 'vant'
 import axios from "axios"
 
 const router = useRouter()
-
-const api =  'https://xm337.life/api/v1/passport/auth/register'
+const globalConfig = computed(()=> window.globalConfig)
+// 注册接口
+const api = globalConfig.regApi
 // 成功后的跳转地址
-const jumpAfterSuccess = 'https://xm337.life/#appdown'
+const jumpAfterSuccess = globalConfig.jumpAfterSuccess
 // 邀请码
 const invite_code = 'textCode'
 
@@ -134,7 +135,6 @@ const form = reactive({
   password: '',
   password2: ''
 })
-const isDisguise = computed(()=> window.globalConfig.isDisguise)
 const method = 'POST'
 const emailReg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
 
@@ -161,15 +161,22 @@ function doPost(params) {
     type: method,
     data: params,
     success: function (res) {
-      const {token, is_admin, auth_data} = res.data
-      showNotify({
-        type: "success",
-        message:'注册成功，即将跳转到APP下载页'
-      })
-      // showToast('注册成功，即将跳转到APP下载页')
-      setTimeout(function () {
-        window.location.href = jumpAfterSuccess
-      }, 2000)
+      const { token, is_admin, auth_data } = res.data
+      if (globalConfig.isDisguise) {
+        showNotify({
+          type: "success",
+          message:'注册成功。'
+        })
+      } else {
+        showNotify({
+          type: "success",
+          message:'注册成功，即将跳转到APP下载页'
+        })
+        // showToast('注册成功，即将跳转到APP下载页')
+        setTimeout(function () {
+          window.location.href = jumpAfterSuccess
+        }, 2000)
+      }
     },
     error: function (err){
       const {statusText,responseJSON:{message}} = err
