@@ -13,6 +13,7 @@
             <div class="h-32 w-32 rounded-lg p-2 bg-white mb-4 flex items-center">
               <img src="/static-assets/images/base/logo.png" height="237"  width="288"/>
             </div>
+
             <div v-if="!isDisguise" class="text-center">
               <strong class="text-2xl">小满vpn加速器</strong>
               <br>

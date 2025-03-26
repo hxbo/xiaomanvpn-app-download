@@ -10,6 +10,7 @@
         <a href="https://apps.apple.com/cn/app/xiaoman-dns/id6615085523" @click="openRandomLink()" target="_blank" class="button bg-slate-800 ">
           <i class="mdi mdi-apple "></i>
           苹果
+
         </a>
         <a href="http://go.xm404.com/repo/xm41.com.apk" target="_blank" class="button bg-green-600">
           <i class="mdi mdi-android "></i>
