@@ -124,9 +124,9 @@ import axios from "axios"
 const router = useRouter()
 const globalConfig = computed(()=> window.globalConfig)
 // 注册接口
-const api = globalConfig.regApi
+const api = globalConfig.value.regApi
 // 成功后的跳转地址
-const jumpAfterSuccess = globalConfig.jumpAfterSuccess
+const jumpAfterSuccess = globalConfig.value.jumpAfterSuccess
 // 邀请码
 const invite_code = 'textCode'
 
@@ -162,7 +162,7 @@ function doPost(params) {
     data: params,
     success: function (res) {
       const { token, is_admin, auth_data } = res.data
-      if (globalConfig.isDisguise) {
+      if (globalConfig.value.isDisguise) {
         showNotify({
           type: "success",
           message:'注册成功。'
