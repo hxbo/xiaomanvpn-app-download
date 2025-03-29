@@ -10,7 +10,7 @@ const host = ''
 const intercept = 1 // 是否拦截
 
 export default function $axios(options, showLoading = false) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve, reject)=>{
     const instance = axios.create({
       baseURL: host,
       isEditContentType: true,
@@ -21,7 +21,7 @@ export default function $axios(options, showLoading = false) {
     if (intercept) {
       // request 拦截器
       instance.interceptors.request.use(
-        (config) => {
+        (config)=>{
           if (config.url !== '/connect/token' && config.isEditContentType) {
             config.headers['Content-Type'] = 'application/json;charset=UTF-8'
           } else if (config.url === '/connect/token') {
@@ -43,14 +43,14 @@ export default function $axios(options, showLoading = false) {
               ? (config.url = url + '?_=' + new Date().getTime())
               : (config.url = url + '&_=' + new Date().getTime())
             // 如果是get请求，且params是数组类型如arr=[1,2]，则转换成arr=1&arr=2
-            config.paramsSerializer = function (params) {
+            config.paramsSerializer = function(params) {
               // return qs.stringify(params, {arrayFormat: 'repeat'})
             }
           }
 
           return config
         },
-        (error) => {
+        (error)=>{
           // 请求错误时
           // 需要重定向到错误页面
           const errorInfo = error.response
@@ -66,7 +66,7 @@ export default function $axios(options, showLoading = false) {
       )
       // response 拦截器
       instance.interceptors.response.use(
-        (response) => {
+        (response)=>{
           const { success, msg } = response.data
           if (success) {
             return response.data
@@ -74,7 +74,7 @@ export default function $axios(options, showLoading = false) {
             throw msg
           }
         },
-        (err) => {
+        (err)=>{
           if (err && err.response) {
             switch (err.response.status) {
               case 400:
@@ -86,7 +86,7 @@ export default function $axios(options, showLoading = false) {
                 localStorage.removeItem('user_info')
                 localStorage.removeItem('access_token')
                 // 清除store中的所有模块的选井
-                setTimeout(() => {
+                setTimeout(()=>{
                   router.push({ name: 'login' })
                 }, 200)
                 break
@@ -136,11 +136,11 @@ export default function $axios(options, showLoading = false) {
     }
     // 请求处理
     instance(options)
-      .then((res) => {
+      .then((res)=>{
         resolve(res)
         return false
       })
-      .catch((error) => {
+      .catch((error)=>{
         reject(error)
         if (error?.response) {
           if (error.response.status !== 500) {

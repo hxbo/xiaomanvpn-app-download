@@ -40,14 +40,14 @@ export default defineConfig({
   },
   server: {
     // https: true,
-    host: '0.0.0.0', //配置了0.0.0.0，静态资源服务将以localhost和本地Ip进行启动
+    host: '0.0.0.0', // 配置了0.0.0.0，静态资源服务将以localhost和本地Ip进行启动
     port: 9025,
     open: true,
     proxy: {
       '/api': {
         target: 'https://xm337.life/api/v1/passport/auth/register', // 真实api地址
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
+        rewrite: (path)=>path.replace(/^\/api/, '')
       }
     }
   },
@@ -55,7 +55,7 @@ export default defineConfig({
     outDir: 'dist_xm_reg',
     // 静态资源的存放目录
     assetsDir: 'assets',
-    //类型： boolean | 'terser' | 'esbuild'
+    // 类型： boolean | 'terser' | 'esbuild'
     // 必须开启：使用terserOptions才有效果
     minify: 'terser',
     // 适配低版本浏览器
@@ -63,21 +63,21 @@ export default defineConfig({
     // https://terser.org/docs/api-reference/#minify-options
     terserOptions: {
       compress: {
-        //生产环境时移除console
+        // 生产环境时移除console
         drop_console: true,
         drop_debugger: true
       }
     },
     // https://rollupjs.org/configuration-option
     rollupOptions: {
-      //静态资源分类打包
+      // 静态资源分类打包
       output: {
         // 入口文件
-        entryFileNames: (a, b, c) => {
+        entryFileNames: (a, b, c)=>{
           return `assets/js/[name]-[hash].${timestamp}.js`
         },
         // 资源文件名 css 图片等等
-        assetFileNames: (chunkInfo) => {
+        assetFileNames: (chunkInfo)=>{
           const suffix = chunkInfo.name.split('.').pop()
           if (['css'].includes(suffix)) {
             return `assets/[ext]/assets-[hash].${timestamp}.[ext]`
@@ -87,7 +87,7 @@ export default defineConfig({
         },
 
         // 块文件名，与下面manualChunks，2选1
-        chunkFileNames: (chunkInfo) => {
+        chunkFileNames: (chunkInfo)=>{
           return `assets/js/chunk-[hash].${timestamp}.js`
         }
 
@@ -138,7 +138,7 @@ export default defineConfig({
       ]
     },
 
-    //打包前清空文件，默认true
+    // 打包前清空文件，默认true
     emptyOutDir: true
   },
   css: {
